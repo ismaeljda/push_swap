@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <stdlib.h>
+#include "ft_printf/ft_printf.h"
 
 typedef struct s_stack_node
 {
@@ -24,22 +25,49 @@ typedef struct s_stack_node
     int cost;
     bool above_median;
     bool cheapest;
+    int push_cost;
     struct s_stack_node *target_node;
     struct s_stack_node *next;
     struct s_stack_node *prev;
 } t_stack_node;
 
-char    **ft_split(char const *s, char c);
-long ft_atol(const char *str);
-t_stack_node  *ft_lstnew(int content);
-t_stack_node  *ft_lstlast(t_stack_node *lst);
-void    ft_lstadd_front(t_stack_node **lst, t_stack_node *new_node);
-int ft_error (t_stack_node **a, char **str);
+//Main function
+void ft_error (t_stack_node **a, char **str);
+void sort_three(t_stack_node **a);
+void sort_stacks(t_stack_node **a, t_stack_node **b);
+
+//init 
+void init_a(t_stack_node *a, t_stack_node *b);
+void init_b(t_stack_node *a, t_stack_node *b);
+void ft_current(t_stack_node *stack);
+void set_cheapest(t_stack_node *stack);
 
 //Operations
+void			sa(t_stack_node **a, bool affich);
+void			sb(t_stack_node **b, bool affich);
+void			ss(t_stack_node **a, t_stack_node **b, bool affich);
+void			ra(t_stack_node **a, bool affich);
+void			rb(t_stack_node **b, bool affich);
+void			rr(t_stack_node **a, t_stack_node **b, bool affich);
+void			rra(t_stack_node **a, bool affich);
+void			rrb(t_stack_node **b, bool affich);
+void			rrr(t_stack_node **a, t_stack_node **b, bool affich);
+void			pa(t_stack_node **a, t_stack_node **b, bool affich);
+void			pb(t_stack_node **b, t_stack_node **a, bool affich);
+void rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node);
+void rev_rotate_both(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest_node);
 
-void    ft_swap (t_stack_node *lst);
-void    ft_push (t_stack_node **lst_a, t_stack_node **lst_b);
-void    ft_rotate(t_stack_node **lst);
-void    ft_reverse_rotate(t_stack_node **lst);
+//utils
+int stack_len(t_stack_node *stack);
+t_stack_node *ft_last(t_stack_node *stack);
+bool stack_sorted(t_stack_node *stack);
+t_stack_node *ft_min(t_stack_node *stack);
+t_stack_node *ft_max(t_stack_node *stack);
+t_stack_node *ft_cheapest(t_stack_node *stack);
+void ft_prep(t_stack_node **stack, t_stack_node *top_node, char stack_name);
+char    **ft_split_2(char const *s, char c);
+long ft_atol(const char *str);
+void free_stack(t_stack_node **stack);
+void	free_errors(t_stack_node **a);
+
 #endif

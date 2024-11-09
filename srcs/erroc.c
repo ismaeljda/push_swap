@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-#include <stdio.h>
+#include "../push_swap.h"
 
-static int ft_isdigit( int arg )
+static int ft_isdigit_2( int arg )
 {
     if (arg >= '0' && arg <= '9')
         return (1);
@@ -38,11 +37,11 @@ static int ft_is_correct_char(char *str)
     i = 0;
     while (str[i])
     {
-        if (ft_isdigit(str[i]) == 0 && str[i] != ' ' && str[i] != '-' && str[i] != '+')
+        if (ft_isdigit_2(str[i]) == 0 && str[i] != ' ' && str[i] != '-' && str[i] != '+')
             return (0);
         if (str[i] == '-' || str[i] == '+')
         {
-            if (ft_isdigit(str[i + 1]) == 0)
+            if (ft_isdigit_2(str[i + 1]) == 0)
                 return (0);
         }
         i++;
@@ -50,7 +49,7 @@ static int ft_is_correct_char(char *str)
     return (1);
 }
 
-static int ft_double(char **str)
+/*static int ft_double(char **str)
 {
     int i;
     int j;
@@ -68,26 +67,37 @@ static int ft_double(char **str)
         i++;
     }
     return (1);
-}
-static int ft_error_message(void)
+}*/
+
+static void append_node(t_stack_node **stack, int n)
 {
-    printf ("error encountered\n");
-    return (1);
+	t_stack_node *node;
+	t_stack_node *last_node;
+
+	if (!stack)
+		return;
+	node = malloc(sizeof(t_stack_node));
+	if (!node)
+		return;
+	node->next = NULL;
+	node->nbr = n;
+	node->cheapest = 0;
+
+	if (!(*stack))
+	{
+		*stack = node;
+		node->prev = NULL;
+	}
+	else
+	{
+		last_node = ft_last(*stack);
+		last_node->next = node;
+		node->prev = last_node;
+	}
 }
 
-void append_node(t_stack_node **stack, int n)
-{
-    t_stack_node *node;
 
-    if (!stack)
-        return ;
-    node = ft_lstnew(n);
-    if (!node)
-        free (stack);
-    ft_lstadd_front(stack, node);
-}
-
-int ft_error (t_stack_node **a, char **str)
+void ft_error (t_stack_node **a, char **str)
 {
     int i;
     long nb;
@@ -98,23 +108,22 @@ int ft_error (t_stack_node **a, char **str)
     {
         nb = ft_atol(str[i]);
         if (ft_is_correct_char(str[i]) == 0)
-            return(ft_error_message());
+            free_errors(a);
         if (nb < INT_MIN || nb > INT_MAX)
-            return(ft_error_message());
+            free_errors(a);
         j = i + 1;
         while (str[j])
         {
             if (ft_strcmp(str[i], str[j]) == 0)
-                return(ft_error_message());
+                free_errors(a);
             j++;
         }
         i++;
         append_node(a, (int)nb);
     }
-    return (0);
 }
 
-void print_list (t_stack_node *lst)
+/*void print_list (t_stack_node *lst)
 {
     t_stack_node *current;
 
@@ -135,4 +144,4 @@ int main(int ac, char **av)
     a = NULL;
     ft_error(&a, av + 1);
     print_list(a);
-}
+}*/

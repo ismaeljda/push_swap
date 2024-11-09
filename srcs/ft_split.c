@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../push_swap.h"
 
 static  int ft_len(char const *s, char c)
 {
@@ -70,7 +70,7 @@ static char    *ft_word(char const *s, char c)
     str[i] = '\0';
     return (str);
 }
-char    **ft_split(char const *s, char c)
+char    **ft_split_2(char const *s, char c)
 {
     char    **tab;
     int     i;
